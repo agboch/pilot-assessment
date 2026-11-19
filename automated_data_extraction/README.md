@@ -202,4 +202,4 @@ Please cite the sources you rely on.
 
 ## Licence
 
-The code and data in this folder are released under CC BY 4.0; see `LICENSE`.
+CC BY 4.0, as for the whole repository; see [`../LICENSE`](../LICENSE).
