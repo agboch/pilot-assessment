@@ -1,0 +1,321 @@
+# Empirical Classification Prompt — Version History
+
+A log of prompt iterations for classifying psychology articles as empirical or non-empirical.
+
+Script names in this log are the working names at the time. The public curation script is
+`pilot2_db_curation_v5_replicable.R`, which prints the final prompt (v7) at Step 3d.
+
+---
+
+## v1 — Original (Lukas W: https://github.com/LukasWallrich/pilot_meta_extracter/blob/main/classification/classify_articles.R)
+
+> **Context:** Structured output prompt using R typed fields, part of a larger pipeline with
+> `field_id` and `field_reasoning` outputs.
+
+> **Change:** NA - untested in this workflow.
+```
+Determine whether this paper presents empirical research. Empirical research involves the
+collection and/or analysis of data (quantitative or qualitative). This includes experiments,
+surveys, interviews, case studies, observational studies, meta-analyses of empirical data,
+and secondary data analyses. Non-empirical work includes theoretical papers, literature
+reviews (without quantitative synthesis), commentaries, editorials, and methodological
+proposals without data application.
+
+You will receive articles as JSON with: article_title, article_abstract, journal_title
+```
+
+---
+
+## v2 — 16 Feb 2026
+
+> **Context:** v1 needed to be ported into Claude's chat interface to work with variables in
+> the `pilot-tf-meta-assessment-database-curation-pilot-2-db.R` working directory.
+
+> **Change:** Decoupled from the R/JSON pipeline. Switched input to CSV batch processing and
+> added a reasoning output column.
+```
+Classify these psychology articles as empirical or non-empirical.
+
+CRITERIA:
+Empirical = data collection/analysis (experiments, surveys, meta-analyses, etc.)
+Non-empirical = reviews, theory, commentary, tutorials, guidelines
+
+Use title AND abstract together to make your classification.
+
+Return a CSV file named 'articles_classified_batch_XX.csv' (replace XX with the batch number)
+with columns: article_id, doi, title, journal, year, volume, issue, pages, authors,
+is_empirical (Yes/No), reasoning
+```
+
+---
+
+## v3 — 17 Feb 2026
+
+> **Context:** Manual review of articles selected for Zotero export post-classification
+> revealed two failures: (1) clearly non-empirical articles (e.g. award notices,
+> supplementary material, special issue intros) were being classified as empirical, and
+> (2) many qualitative articles were being classified as non-empirical.
+
+> **Change:** Significantly expanded criteria with granular sub-bullets for quantitative,
+> qualitative, and mixed methods. Problem (1) was primarily handled by exclusion keywords in
+> the `pilot-tf-meta-assessment-database-curation-pilot-2-db` script, with some additional
+> title+abstract reasoning added to the prompt as a test of whether the two approaches could
+> be married. Problem (2) was addressed by explicitly enumerating qualitative methods and
+> stating that qualitative studies are empirical.
+```
+Classify psychology articles as EMPIRICAL (Yes) or NON-EMPIRICAL (No).
+
+EMPIRICAL — classify as YES if the article involves:
+  Quantitative methods:
+    - Experiments, RCTs, quasi-experiments
+    - Surveys and questionnaire studies
+    - Observational and epidemiological studies
+    - Longitudinal and cohort studies
+    - Meta-analyses (quantitative data synthesis)
+    - Psychometric and scale validation studies
+    - Secondary data analyses and database studies
+  Qualitative methods:
+    - Interviews (individual or focus group)
+    - Ethnography and participant observation
+    - Thematic analysis, grounded theory, IPA
+    - Discourse, narrative, or conversation analysis
+    - Case studies with systematic data collection
+    - Qualitative content analysis
+  Mixed methods:
+    - Any combination of the above
+
+NON-EMPIRICAL — classify as NO if the article is:
+    - A theoretical paper or conceptual framework
+    - A narrative or scoping literature review
+    - A commentary, opinion, or perspective piece
+    - An editorial, letter, or response
+    - A methodological tutorial without data application
+    - Clinical guidelines or practice recommendations
+    - A historical or philosophical analysis
+
+IMPORTANT NOTES:
+    - Qualitative studies ARE empirical.
+    - Psychoanalytic, phenomenological, and humanistic studies with systematic data
+      collection = EMPIRICAL.
+    - When uncertain, classify as EMPIRICAL if the abstract describes participants,
+      data, or a method of analysis.
+
+Return a CSV named 'articles_classified_batch_XX.csv' with columns:
+article_id, doi, title, journal, year, volume, issue, pages, authors,
+is_empirical (Yes/No), reasoning
+```
+
+---
+
+## v4 — 17 Feb 2026
+
+> **Context:** v3 was too long to paste inline in new LLM chats and kept being treated as a
+> file upload, making it unreliable as a prompt. Separate title vs. abstract comparison testing also
+> showed that titles alone produced poor classification results so that abstracts should be the stronger signal.
+
+> **Change:** Condensed v3 into a shorter form suitable for direct chat input while preserving
+> all logic. Added explicit abstract primacy rule. Split output into `title_is_empirical` and
+> `abstract_is_empirical` columns as a carryover from title vs. abstract testing.
+```
+Classify psychology articles as EMPIRICAL (Yes) or NON-EMPIRICAL (No).
+
+EMPIRICAL = Yes if the article involves original data collection or analysis, including:
+* Quantitative: experiments, RCTs, surveys, observational studies, longitudinal/cohort
+  studies, meta-analyses, psychometric/scale validation, secondary data analyses
+* Qualitative: interviews, ethnography, thematic analysis, grounded theory, IPA,
+  discourse/narrative analysis, case studies with systematic data collection
+* Mixed methods: any combination of the above
+
+NON-EMPIRICAL = No if the article is a theoretical/conceptual paper, narrative or scoping
+review, commentary, opinion, editorial, letter, methodological tutorial without data,
+clinical guidelines, or historical/philosophical analysis.
+
+Important:
+* Qualitative studies ARE empirical - do not require numbers/statistics
+* Psychoanalytic, phenomenological, and humanistic studies with systematic data collection
+  (case material, interviews, observations) = EMPIRICAL
+* The abstract is the primary signal; title alone should not override a clearly empirical abstract
+
+Use title AND abstract together. The abstract_is_empirical field determines is_empirical.
+
+Return a CSV named articles_classified_batch_XX.csv with columns: article_id, doi, title,
+journal, year, volume, issue, pages, authors, title_is_empirical, title_reasoning,
+abstract_is_empirical, abstract_reasoning, is_empirical
+
+Process ALL rows without truncation.
+```
+
+---
+
+## v5 — 20 Feb 2026
+
+> **Context:** Broader tidy of the R script prompted a consistency pass on the prompt
+> formatting. The split `title_is_empirical` / `abstract_is_empirical` output columns were a
+> known carryover from the title vs. abstract testing phase but were tolerated for now as the
+> priority was prompt logic, not output cleanup.
+
+> **Change:** Formatting cleanup only — indentation and structure aligned with the updated R
+> script. No changes to logic or definitions.
+```
+Classify psychology articles as EMPIRICAL (Yes) or NON-EMPIRICAL (No).
+
+EMPIRICAL = Yes if the article involves original data collection or analysis:
+  Quantitative: experiments, RCTs, surveys, observational studies, longitudinal/
+    cohort studies, meta-analyses, psychometric/scale validation, secondary data analyses
+  Qualitative: interviews, ethnography, thematic analysis, grounded theory, IPA,
+    discourse/narrative analysis, case studies with systematic data collection
+  Mixed methods: any combination of the above
+
+NON-EMPIRICAL = No if the article is a theoretical/conceptual paper, narrative or
+  scoping review, commentary, opinion, editorial, letter, methodological tutorial
+  without data, clinical guidelines, or historical/philosophical analysis.
+
+Important:
+  - Qualitative studies ARE empirical - do not require numbers or statistics.
+  - Psychoanalytic, phenomenological, and humanistic studies with systematic data
+    collection (case material, interviews, observations) = EMPIRICAL.
+  - The abstract is the primary signal; the title alone should not override a clearly
+    empirical abstract.
+
+Use title AND abstract together. The abstract_is_empirical field determines is_empirical.
+
+Return a CSV named articles_classified_batch_XX.csv with columns:
+  article_id, doi, title, journal, year, volume, issue, pages, authors,
+  title_is_empirical, title_reasoning, abstract_is_empirical, abstract_reasoning, is_empirical
+
+Process ALL rows without truncation.
+```
+
+---
+
+## v6 — 23 Feb 2026 
+
+> **Context:** A comparison between Claude and UiO-GPT on the same articles (using v5 prompt) showed
+> meaningful disagreement. On manual review, UiO-GPT's classifications were more often correct.
+> The likely root cause: Claude appeared to use implicit keyword scoring — counting empirical
+> and non-empirical signals separately and falling back to the title when scores were tied or
+> weak (possibly a Claude default, or a consequence of the earlier title+abstract fiddling).
+> UiO-GPT appeared to read abstracts holistically, judging study design as a whole. This made
+> Claude more easily fooled by review abstracts, which naturally contain empirical-sounding
+> keywords from the studies they discuss, inflating scores without the article itself being
+> empirical.
+
+> **Change:** (1) Replaced implicit keyword scoring with explicit holistic judgment ("use your
+> best judgment") combined with a direct statement that a paper *discussing* empirical work is
+> not itself empirical — targeting the failure mode where review abstracts inflated scores by
+> mentioning other studies' methods. (2) Added hard override keywords as a WIP safety net for
+> the clearest cases where holistic judgment might still be fooled. (3) Cleaned up the split
+> title/abstract output columns, reverting to a single `is_empirical` field plus
+> `empirical_reasoning`.
+
+```
+You are a research classifier. Use your best judgment to determine whether an academic paper
+presents empirical research, based on the abstract.
+
+Empirical papers involve original data collection or analysis, including quantitative work
+(experiments, RCTs, surveys, observational/longitudinal/cohort studies, secondary data
+analyses, psychometric/scale validation, simulations, meta-analyses), qualitative work
+(interviews, ethnography, thematic analysis, grounded theory, IPA, discourse/narrative
+analysis, systematic case studies), or any mixed-methods combination.
+
+Non-empirical work includes theoretical papers, literature reviews without quantitative
+synthesis, commentaries, editorials, and methodological proposals without data application.
+
+Important distinctions:
+- A paper that discusses or synthesizes empirical work is not itself empirical
+- Narrative or scoping reviews are NOT empirical; reviews with a quantitative meta-analysis ARE
+- Qualitative studies with systematic data collection ARE empirical even without statistics
+- If an abstract explicitly labels the article type, treat that label as a strong signal
+
+Hard overrides — classify as non-empirical if the abstract contains any of the following
+(exception: review terms paired with "meta-analysis" should still be classified as empirical):
+  "systematic review" / "scoping review" / "narrative review" / "meta-narrative review"
+  "we propose" / "we present a framework" / "we outline a model"
+  "commentary" / "editorial" / "response to" / "letter to"
+  "conceptual paper" / "theoretical paper" / "theoretical overview"
+
+Return a CSV named articles_classified_batch_XX.csv with two additional columns:
+  is_empirical (true/false)
+  empirical_reasoning (citing specific abstract evidence or key non-empirical phrases)
+```
+
+---
+
+## v7 — 23 Feb 2026 *(current)*
+
+> **Context:** A known limitation going into testing was that the hard overrides may be too aggressive. The original prompt was tested by having two LLMs independently classify 100 academic abstracts across two datasets (50 articles each) as empirical or non-empirical. A coding reliability check was then conducted comparing the two outputs, calculating percent agreement on empirical cases, non-empirical cases, and overall, as well as identifying and analyzing specific disagreements. Across both datasets the models achieved high overall agreement (98% and 94% respectively), with disagreements concentrated in edge cases involving qualitative and critical methodologies (e.g., testimonios, autoethnography) and papers that introduced methodological or theoretical frameworks with ambiguous empirical application
+
+> **Change:** The hard override phrases "we propose," "we present a framework," and "we outline a model" were removed to reduce false negatives on qualitative and critical research traditions. Two additions were made to compensate: autoethnography and testimonios were added to the qualitative methods list to explicitly recognize these as valid empirical approaches, and a new important distinction bullet was added stating that methodological or theoretical papers that describe or introduce an approach without reporting findings from applying it are not empirical. The title-inference caution was also moved to the opening of the prompt for clearer framing.
+
+```
+You are a research classifier. Use your best judgment to determine whether an academic paper presents empirical research. The classifications must be based on the abstract; inferring empirical work from the title or topic alone is insufficient.
+Empirical papers involve original data collection or analysis, including quantitative work (experiments, RCTs, surveys, observational/longitudinal/cohort studies, secondary data analyses, psychometric/scale validation, simulations, meta-analyses), qualitative work (interviews, ethnography, autoethnography, testimonios, thematic analysis, grounded theory, IPA, discourse/narrative analysis, systematic case studies), or any mixed-methods combination.
+Non-empirical work includes theoretical papers, literature reviews without quantitative synthesis, commentaries, editorials, and methodological proposals without data application.
+Important distinctions:
+
+A paper that discusses or synthesizes empirical work is not itself empirical
+Narrative or scoping reviews are NOT empirical; reviews with a quantitative meta-analysis ARE
+Qualitative studies with systematic data collection ARE empirical even without statistics
+If an abstract explicitly labels the article type, treat that label as a strong signal
+Methodological or theoretical papers that describe or introduce an approach without reporting findings from applying it are NOT empirical
+
+Hard overrides — classify as non-empirical if the abstract contains any of the following (exception: review terms paired with "meta-analysis" should still be classified as empirical):
+
+"systematic review" / "scoping review" / "narrative review" / "meta-narrative review"
+"commentary" / "editorial" / "response to" / "letter to"
+"conceptual paper" / "theoretical paper" / "theoretical overview"
+
+Return a CSV named articles_classified_batch_XX.csv with two additional columns:
+
+is_empirical (true/false)
+empirical_reasoning (citing specific abstract evidence or key non-empirical phrases)
+```
+
+---
+
+## Overall Assessment: v6 → v7 (current and final prompt for pilot-db-2 curation)
+
+### What improved
+
+The primary concerns going into v7 testing were: (1) whether qualitative and critical
+methodologies (e.g., testimonios, autoethnography) would be parsed more accurately, and
+(2) whether removing the "we propose," "we present a framework," and "we outline a model"
+hard overrides might destabilise classifications more broadly. Both concerns were resolved:
+
+- False negatives on qualitative and critical methodologies (e.g., testimonios,
+  autoethnography) were resolved
+- Cross-model reliability on batch_01 improved from 96% to 100%
+- Within-model self-consistency remained high for both Claude (~98%) and UiO-GPT (~100%)
+  on batch_01
+- Remaining disagreements across and within models fell on genuinely ambiguous cases
+  (e.g., articles describing participant experiences but lacking formal method or analysis
+  details), meaning the hard override revisions shifted classifications in a targeted
+  rather than disruptive way
+
+### Some model comparison notes
+
+UiO-GPT appears to perform generally better on this task — its classifications are closer
+to manual judgment from the outset without requiring as much explicit prompting. However,
+its system limitations make it infeasible for batch classification:
+
+- Maximum ~50 articles per session, with frequent failures around article 41
+- Rejects CSVs inconsistently despite being capable of reading them, causing txt-to-CSV
+  flip-flops that introduce export inconsistencies between models; or is consistently lazy
+  and truncates responses despite prompting otherwise (suspect a soft limit set in the
+  backend)
+- In our reliability checks, nearly all comparisons fell short of the full 50 articles
+  because of these GPT parsing issues (reliability table not included)
+
+### Rationale for final decision
+
+Although v7 improvements were generally modest, they were most clearly realised within
+Claude's environment. Claude is the priority environment for this project because
+(at time of writing):
+
+- It can reliably batch classify large files (up to ~5000 articles at a time)
+- It provides consistent, reproducible access for this workflow
+
+v7 was therefore selected as the final prompt.
+
+---
+

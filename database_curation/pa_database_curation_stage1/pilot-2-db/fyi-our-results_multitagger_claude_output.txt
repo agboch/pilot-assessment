@@ -1,0 +1,554 @@
+MultiTagger vs Claude comparison - results log
+Generated: 2026-11-18 16:26 
+Folder:    (working folder; path removed for sharing)
+
+==============================================================================
+1. DATA CHECK
+==============================================================================
+
+Claude articles:                 24911
+MultiTagger articles:            24911
+Claude articles found in MT:     24911
+Labels per prediction array:     59
+Labels assigned in total:        26657
+
+==============================================================================
+2. LABEL GROUPS
+==============================================================================
+
+# A tibble: 9 x 3
+  our_group                           paper_group      n
+  <chr>                               <chr>        <int>
+1 Empirical                           Clinical        24
+2 Empirical                           Not in paper     4
+3 Empirical                           Other            2
+4 Group 1: strong empirical candidate Clinical         1
+5 Group 1: strong empirical candidate Other            7
+6 Group 2: grey zone                  Clinical         2
+7 Group 2: grey zone                  Other            4
+8 Group 3: non-empirical              Clinical         1
+9 Group 3: non-empirical              Other           14
+
+==============================================================================
+3. MULTITAGGER: LABEL COUNTS
+==============================================================================
+
+
+-- 3a. No opinion (no label assigned) ---------------------------------------- 
+7767 of 24911 articles (31.2%)
+
+Example titles:
+  1. Curb the spread: Leveraging intensive longitudinal data to unravel within- and between-person processes in adherence to nonpharmaceutical interventions during COVID-19.
+  2. Researching what we practice—The paradigm of systemic family research: Part 1
+  3. Cause-Specific Mortality among Patients in Treatment for Opioid Use Disorder in Multiple Settings: A Prospective Comparative Cohort Study
+  4. Mindreading beliefs in same- and cross-neurotype interactions
+  5. The relationship between depressive symptoms and positive emotional anticipation of goal achievement
+
+-- 3b. Every label, most frequent first, with example titles ----------------- 
+
+[clinical_trial]  n = 3921 (15.74%)  |  Empirical
+  - Change detection versus change localization for faces, houses, and words 
+  - Paradigm constraints on moral decision-making dynamics 
+
+[clinical_study]  n = 3338 (13.40%)  |  Empirical
+  - Exploring the physiological benefits of carrying a suspended backpack versus a traditional backpack 
+  - Meaningful Communication but not Superficial Anthropomorphism Facilitates Human-Automation Trust Calibration: The Human-Automation Trust Expectation Model (HATEM) 
+
+[longitudinal_studies]  n = 2790 (11.20%)  |  Empirical
+  - Moving on: Exploring the implications of leader departure and incoming temporary leaders for collective turnover and unit performance. 
+  - Illness identity and well-being in congenital heart disease: Directionality of effects and developmental trajectories. 
+
+[reproducibility_of_results]  n = 2553 (10.25%)  |  Empirical
+  - Validity and reliability of the COVID-19 Anxiety Syndrome Scale in Canadian dentists 
+  - Measuring grateful climate at the sports team 
+
+[interviews_as_topic]  n = 1813 (7.28%)  |  Group 1: strong empirical candidate
+  - Self-beliefs, Transactive Memory Systems, and Collective Identification in Teams: Articulating the Socio-Cognitive Underpinnings of COHUMAIN 
+  - To know and be known: Mexican borderland mothers’ epistemic experiences 
+
+[cross_cultural_comparison]  n = 1573 (6.31%)  |  Empirical
+  - Validity Evidence for the Brief Self-Control Scale in the Spanish Adult Population: A Systematic Study 
+  - School-Age Child Routines: Adaptation and Validation Studies of the Portuguese Version of the Child Routines Questionnaire 
+
+[randomized_controlled_trial]  n = 1378 (5.53%)  |  Empirical
+  - Artificial intelligence and perceived effort in relationship maintenance: Effects on relationship satisfaction and uncertainty 
+  - Effectiveness of informational interviewing for facilitating networking self-efficacy in university students 
+
+[cross_sectional_study]  n = 1234 (4.95%)  |  Empirical
+  - The Relationship Between Intolerance of Uncertainty and Spiritual Well-Being Levels of COVID-19 Among Elderly: A Cross Sectional and Correlational Study 
+  - Psychological inflexibility as a moderator of the relationship between adverse childhood experiences and negative automatic thoughts 
+
+[review]  n = 896 (3.60%)  |  Group 2: grey zone
+  - Receiver operating characteristic curves in the crime linkage context: Benefits, limitations, and recommendations 
+  - Metaphysics Matters: Towards Semiotic Causation 
+
+[case_control_study]  n = 665 (2.67%)  |  Empirical
+  - Do normative data specific to Greek Australian older adults improve validity of neuropsychological assessment results? 
+  - Classification accuracy and resistance to coaching of the Spanish version of the Inventory of Problems-29 and the Inventory of Problems-Memory: A simulation study with mTBI patients 
+
+[historical_article]  n = 556 (2.23%)  |  Group 2: grey zone
+  - Mourning in Hamlet: Turning ancestral ghosts into ancestors 
+  - Commentary on “War: A Transactional Group Analysis” by Keith Tudor 
+
+[cohort_study]  n = 532 (2.14%)  |  Empirical
+  - 24 Longitudinal Neuropsychological Functioning in Gulf War Veterans Exposed to Neurotoxicants and War-Related Trauma 
+  - Longitudinal associations between early childhood irritability and adolescent depression symptoms in autistic children are mediated by peer relationships but not educational engagement 
+
+[case_reports]  n = 479 (1.92%)  |  Empirical
+  - The transition from Mild Cognitive Impairment of the Amnestic Type to early dementia: A phenomenological and neuropsychological case analysis 
+  - A - 28 Serial Evaluations of an Older Adult with Epilepsy and Incidental Findings of Early-Onset Alzheimer’s Disease: a Case Study 
+
+[follow_up_studies]  n = 430 (1.73%)  |  Empirical
+  - A Longitudinal Analysis of Residential Mobility and Experience of Client Violence Among Women Who Exchange Sex in Baltimore 
+  - Adherence, Competence, and Alliance as Predictors of Long-term Outcomes of Cognitive Behavioral Therapy for Youth Anxiety Disorders 
+
+[prospective_studies]  n = 419 (1.68%)  |  Empirical
+  - 2 Clinical Validity and Cut-Off Scores of a Brief Neuropsychological Battery for a Large Rural Population in Community Setting 
+  - Savoring mediates the mental health benefits of positive coping processes: A prospective population-based analysis 
+
+[evaluation_studies]  n = 412 (1.65%)  |  Empirical
+  - Institutional Design of Pension Systems Versus Labor Market Structure: What Matters Most? 
+  - Rapid Online Assessment of Reading (ROAR): Evaluation of an Online Tool for Screening Reading Skills in a Developmental-Behavioral Pediatrics Clinic 
+
+[multicenter_study]  n = 385 (1.55%)  |  Empirical
+  - Exploring Teachers’ Intentions to Use Behavioral Classroom Interventions 
+  - The Individual Time Span Scales (ITSS): Introducing a self-report questionnaire to measure individual differences in the perception of time as duration 
+
+[feasibility_studies]  n = 378 (1.52%)  |  Empirical
+  - Promoting engagement with self-guided digital therapeutics for mental health: Insights from a cross-sectional survey of end-users 
+  - Water, lava, and wind 
+
+[focus_groups]  n = 342 (1.37%)  |  Empirical
+  - Digitally Mediated Racial-Ethnic Socialization Among Black/African American Emerging Adults and Their Caregivers 
+  - Adaptation of a mindfulness-based intervention for trauma-exposed, unhoused women with substance use disorder. 
+
+[predictive_value_of_tests]  n = 342 (1.37%)  |  Empirical
+  - A - 19 Cognitive Test Score Dispersion VS. Traditional Memory Composite Scores: Predicting Mild Cognitive Impairment (MCI) &amp; Dementia among Cognitively Impaired, Not MCI Patients 
+  - A - 123 Depression and Negative Symptoms Predicting Memory and Verbal Fluency in Psychotic Major Depression 
+
+[retrospective_studies]  n = 341 (1.37%)  |  Empirical
+  - Review of Consent to Treatment Documentation in University Hospital Wishaw Inpatient Psychiatry 
+  - NHS Ayrshire and Arran Sustainability and Well-being Committee - Assessing and Improving Trainee Well-being 
+
+[random_allocation]  n = 299 (1.20%)  |  Empirical
+  - Can you change my generosity towards future others? The impact of observability on intertemporal pro-social decisions 
+  - Resurgence of goal-directed actions and habits 
+
+[biography]  n = 281 (1.13%)  |  Group 2: grey zone
+  - The significance of the ego in “The Ego and the Id” and its unfulfilled promise 
+  - Treisman (1963): An Appreciation 
+
+[validation_studies]  n = 279 (1.12%)  |  Empirical
+  - Adolescent peer support for mental health problems: evaluation of the validity and reliability of the Mental Health Support Scale for Adolescents 
+  - Development and validation of a task load index for process control room operators (PCRO-TLX) 
+
+[meta_analysis]  n = 223 (0.90%)  |  Group 1: strong empirical candidate
+  - Spurious prospective effects between work experiences and self-esteem: A reanalysis of a meta-analysis of longitudinal studies 
+  - B - 09 Neuropsychological Impacts and Cognitive Effects of Pediatric Leukemia Treatment 
+
+[clinical_studies_as_topic]  n = 138 (0.55%)  |  Group 1: strong empirical candidate
+  - Classification Of MeMory InTerventions: Rationale and developmental process of the COMMIT tool 
+  - CE Workshop 09: Cast Aside Traditional Notions of Statistical Significance, and Focus Instead on Characterizing the Magnitude of Effects that are Clinically or Scientifically Relevant 
+
+[twin_study]  n = 88 (0.35%)  |  Empirical
+  - Mental health effects of the COVID-19 pandemic on children and young adults: empirical analysis of the past, present and the way forward 
+  - Environment-by-PGS Interaction in the Classical Twin Design: An Application to Childhood Anxiety and Negative Affect 
+
+[systematic_review]  n = 80 (0.32%)  |  Group 2: grey zone
+  - The Psychological Impacts and Message Features of Health Misinformation 
+  - Exploring risk and protective factors in kinship family environments: a systematic literature review of the views of children in kinship care 
+
+[personal_narratives]  n = 57 (0.23%)  |  Group 2: grey zone
+  - Being and becoming 
+  - Social work with young women in security emergencies: An autoethnography of epistemic resistance 
+
+[double_blind_method]  n = 52 (0.21%)  |  Empirical
+  - Androstadienone modulates human aggression in a sex-dependent manner 
+  - Contrasting expectancy effects with objective measures in adults with untreated <scp>ADHD</scp> during <scp>QbTest</scp> 
+
+[cross_over_study]  n = 50 (0.20%)  |  Empirical
+  - Self-perception and self-recognition while looking in the mirror on psilocybin 
+  - What happens at work does not always stay at work: Daily job crafting and detachment among colleagues 
+
+[comment]  n = 48 (0.19%)  |  Group 2: grey zone
+  - Six ways of failing to see (and why the differences matter) 
+  - Assessing for autism in adult psychiatry 
+
+[portaits]  n = 42 (0.17%)  |  Group 3: non-empirical
+  - Psi Chi/APA Edwin B. Newman Graduate Research Award. 
+  - Richard L. Miller (1945–2023). 
+
+[congress]  n = 38 (0.15%)  |  Group 1: strong empirical candidate
+  - Workshop 4: Cognitive Assessment For Older People in Daily Clinical Practice – A Primer 
+  - 1 Perioperative Neurocognitive Disorders Defined 
+
+[expression_of_concern]  n = 35 (0.14%)  |  Group 3: non-empirical
+  - The significance of supramodality for embodied cognition: a commentary on Calzavarini (2024) 
+  - Distinguishing modality-specificity at the representational and input level: a commentary on Calzavarini (2024) 
+
+[matched_pair_analysis]  n = 27 (0.11%)  |  Empirical
+  - Individuals with autism spectrum disorder are differentially sensitive to interference from previous verbal feedback 
+  - Attentional bias in psoriasis: The role of processing time and emotional valence 
+
+[autobiography]  n = 25 (0.10%)  |  Group 3: non-empirical
+  - Towards anarchy? 
+  - Ten years of Psychedemia — and the future 
+
+[genome_wide_association_study]  n = 25 (0.10%)  |  Empirical
+  - Educational Influences on Late-Life Health: Genetic Propensity and Attained Education 
+  - <scp>DNA</scp> methylation at birth and lateral ventricular volume in childhood: a neuroimaging epigenetics study 
+
+[clinical_conference]  n = 22 (0.09%)  |  Group 1: strong empirical candidate
+  - Panel report, IPA Congress Cartagena, 2023: Mind in the line of fire 
+  - Invited Symposium 3: Pediatric Neuropsychology Medical Advances and Life Span Outcomes 
+
+[evaluation_studies_as_topic]  n = 16 (0.06%)  |  Group 1: strong empirical candidate
+  - Measures, Metrics, and Indicators for Evaluating Technology-Based Interventions 
+  - Gatekeeping's Influence on Equitable Evaluation Practice 
+
+[published_erratum]  n = 9 (0.04%)  |  Group 3: non-empirical
+  - Emotional context and predictability in naturalistic reading aloud. 
+  - Supramodality does not specify the nature of conceptual representations 
+
+[consensus_development_conference]  n = 7 (0.03%)  |  Group 1: strong empirical candidate
+  - Laterality indices consensus initiative (LICI): A Delphi expert survey report on recommendations to record, assess, and report asymmetry in human behavioural and brain research 
+  - Embedding Play to Enrich Physical Therapy 
+
+[practice_guideline]  n = 6 (0.02%)  |  Group 3: non-empirical
+  - 1 Perioperative Neurocognitive Disorders Defined 
+  - Recommendations for the use of telepsychology in psychology-law practice and research: A statement by American Psychology-Law Society (APA Division 41). 
+
+[human_experimentation]  n = 5 (0.02%)  |  Empirical
+  - Cognitive Science Today, What is it to You? 
+  - Promoting Children's Rights and Protections in Program Evaluation 
+
+[interview]  n = 5 (0.02%)  |  Group 1: strong empirical candidate
+  - All Hands In by Yolanda Peña Mazzoni 
+  - An interview with Ubaldo Leli, MD 
+
+[lectures]  n = 5 (0.02%)  |  Group 3: non-empirical
+  - Plenary G: The Faithful Brain 
+  - Lessons for Child Protection Moving Forward: How to Keep From Rearranging the Deck Chairs on the Titanic 
+
+[legal_cases]  n = 4 (0.02%)  |  Group 3: non-empirical
+  - Esports Minus Sport? 
+  - Abortion rights in the crosshairs: a transnational perspective on resistance strategies 
+
+[systematic_review_as_topic]  n = 4 (0.02%)  |  Group 3: non-empirical
+  - How Did COVID-19 Affect Education and What Can Be Learned Moving Forward? 
+  - P197: Delirium in nursing homes (DeliA) - an interdisciplinary health services research project 
+
+[veterinary_clinical_trial]  n = 3 (0.01%)  |  Empirical
+  - A preliminary examination of the contextual interference effect on trained trick retention in domestic dogs 
+  - Comparing trial-and-error to errorless learning procedures in training pet dogs a visual discrimination 
+
+[editorial]  n = 2 (0.01%)  |  Group 3: non-empirical
+  - Our vision is your opportunity 
+  - Towards a just and equitable applied psycholinguistics 
+
+[news]  n = 2 (0.01%)  |  Group 3: non-empirical
+  - Professor Peter Brunt 
+  - Money matters and mental health 
+
+[newspaper_article]  n = 2 (0.01%)  |  Group 3: non-empirical
+  - ‘You drew my tears’: attunement in making response art alongside the client 
+  - <i>Angel Series</i> : (Left to Right) The Power Within, Contemplating My Angel Status, Overcome 
+
+[veterinary_randomized_controlled_trial]  n = 1 (0.00%)  |  Empirical
+  - A preliminary examination of the contextual interference effect on trained trick retention in domestic dogs 
+
+[bibliography]  n = 0 (0.00%)  |  Group 3: non-empirical
+  (not assigned to any article)
+
+[clinical_trial_protocol]  n = 0 (0.00%)  |  Empirical
+  (not assigned to any article)
+
+[letter]  n = 0 (0.00%)  |  Group 3: non-empirical
+  (not assigned to any article)
+
+[retraction_of_publication]  n = 0 (0.00%)  |  Group 3: non-empirical
+  (not assigned to any article)
+
+[scientific_integrity_review]  n = 0 (0.00%)  |  Group 3: non-empirical
+  (not assigned to any article)
+
+[veterinary_observational_study]  n = 0 (0.00%)  |  Empirical
+  (not assigned to any article)
+
+-- 3c. Label counts by group ------------------------------------------------- 
+
+Empirical:
+# A tibble: 30 x 3
+   label                                  count   pct
+   <chr>                                  <int> <dbl>
+ 1 clinical_trial                          3921 15.7 
+ 2 clinical_study                          3338 13.4 
+ 3 longitudinal_studies                    2790 11.2 
+ 4 reproducibility_of_results              2553 10.2 
+ 5 cross_cultural_comparison               1573  6.31
+ 6 randomized_controlled_trial             1378  5.53
+ 7 cross_sectional_study                   1234  4.95
+ 8 case_control_study                       665  2.67
+ 9 cohort_study                             532  2.14
+10 case_reports                             479  1.92
+11 follow_up_studies                        430  1.73
+12 prospective_studies                      419  1.68
+13 evaluation_studies                       412  1.65
+14 multicenter_study                        385  1.55
+15 feasibility_studies                      378  1.52
+16 focus_groups                             342  1.37
+17 predictive_value_of_tests                342  1.37
+18 retrospective_studies                    341  1.37
+19 random_allocation                        299  1.2 
+20 validation_studies                       279  1.12
+21 twin_study                                88  0.35
+22 double_blind_method                       52  0.21
+23 cross_over_study                          50  0.2 
+24 matched_pair_analysis                     27  0.11
+25 genome_wide_association_study             25  0.1 
+26 human_experimentation                      5  0.02
+27 veterinary_clinical_trial                  3  0.01
+28 veterinary_randomized_controlled_trial     1  0   
+29 clinical_trial_protocol                    0  0   
+30 veterinary_observational_study             0  0   
+
+Group 1: strong empirical candidate:
+# A tibble: 8 x 3
+  label                            count   pct
+  <chr>                            <int> <dbl>
+1 interviews_as_topic               1813  7.28
+2 meta_analysis                      223  0.9 
+3 clinical_studies_as_topic          138  0.55
+4 congress                            38  0.15
+5 clinical_conference                 22  0.09
+6 evaluation_studies_as_topic         16  0.06
+7 consensus_development_conference     7  0.03
+8 interview                            5  0.02
+
+Group 2: grey zone:
+# A tibble: 6 x 3
+  label               count   pct
+  <chr>               <int> <dbl>
+1 review                896  3.6 
+2 historical_article    556  2.23
+3 biography             281  1.13
+4 systematic_review      80  0.32
+5 personal_narratives    57  0.23
+6 comment                48  0.19
+
+Group 3: non-empirical:
+# A tibble: 15 x 3
+   label                       count   pct
+   <chr>                       <int> <dbl>
+ 1 portaits                       42  0.17
+ 2 expression_of_concern          35  0.14
+ 3 autobiography                  25  0.1 
+ 4 published_erratum               9  0.04
+ 5 practice_guideline              6  0.02
+ 6 lectures                        5  0.02
+ 7 legal_cases                     4  0.02
+ 8 systematic_review_as_topic      4  0.02
+ 9 editorial                       2  0.01
+10 news                            2  0.01
+11 newspaper_article               2  0.01
+12 bibliography                    0  0   
+13 letter                          0  0   
+14 retraction_of_publication       0  0   
+15 scientific_integrity_review     0  0   
+
+-- 3d. Articles with at least one label from each group (groups overlap) ----- 
+# A tibble: 5 x 3
+  group                                   n   pct
+  <chr>                               <int> <dbl>
+1 Empirical                           14263  57.3
+2 Group 1: strong empirical candidate  2212   8.9
+3 Group 2: grey zone                   1491   6  
+4 Group 3: non-empirical                133   0.5
+5 No opinion                           7767  31.2
+
+==============================================================================
+4. MULTITAGGER: CALLS UNDER EACH DECISION RULE
+==============================================================================
+
+# A tibble: 3 x 5
+  rule  empirical non_empirical no_opinion default
+  <chr>     <int>         <int>      <int> <lgl>  
+1 A         15592          1552       7767 FALSE  
+2 B         14802          2342       7767 FALSE  
+3 C         17011           133       7767 TRUE   
+
+==============================================================================
+5. CLAUDE
+==============================================================================
+
+
+-- 5a. Empirical calls ------------------------------------------------------- 
+# A tibble: 2 x 3
+  is_empirical     n   pct
+  <chr>        <int> <dbl>
+1 No            4683  18.8
+2 Yes          20228  81.2
+
+-- 5b. Reasoning flagged as ambiguous ---------------------------------------- 
+# A tibble: 2 x 3
+  claude_ambiguous     n   pct
+  <lgl>            <int> <dbl>
+1 FALSE            21185    85
+2 TRUE              3726    15
+
+==============================================================================
+6. AGREEMENT (rule C)
+==============================================================================
+
+
+-- 6a. All articles ---------------------------------------------------------- 
+# A tibble: 5 x 3
+  agreement                       n   pct
+  <chr>                       <int> <dbl>
+1 Both: Empirical             14407  57.8
+2 Both: Not Empirical           114   0.5
+3 MultiTagger: No opinion      7767  31.2
+4 Only Claude: Empirical         19   0.1
+5 Only MultiTagger: Empirical  2604  10.5
+
+-- 6b. Articles MultiTagger labelled ----------------------------------------- 
+# A tibble: 4 x 3
+  agreement                       n   pct
+  <chr>                       <int> <dbl>
+1 Both: Empirical             14407  84  
+2 Both: Not Empirical           114   0.7
+3 Only Claude: Empirical         19   0.1
+4 Only MultiTagger: Empirical  2604  15.2
+Overall agreement: 84.7%
+
+-- 6c. Claude ambiguity, by whether MultiTagger gave labels ------------------ 
+# A tibble: 4 x 4
+  mt_status       claude_status         n   pct
+  <chr>           <chr>             <int> <dbl>
+1 MT: Had opinion Claude: Ambiguous  2041  11.9
+2 MT: Had opinion Claude: Confident 15103  88.1
+3 MT: No opinion  Claude: Ambiguous  1685  21.7
+4 MT: No opinion  Claude: Confident  6082  78.3
+
+-- 6d. Case types ------------------------------------------------------------ 
+# A tibble: 3 x 3
+  case_type                                       n pct_of_all_articles
+  <chr>                                       <int>               <dbl>
+1 Both uncertain                               1685                 6.8
+2 True disagreement: Claude empirical, MT not    19                 0.1
+3 True disagreement: MT empirical, Claude not   663                 2.7
+
+-- 6e. Example titles per agreement category --------------------------------- 
+
+Both: Empirical:
+# A tibble: 2 x 5
+  title                                                                                                     mt_groups mt_labels is_empirical empirical_reasoning
+  <chr>                                                                                                     <chr>     <chr>     <chr>        <chr>              
+1 Psychiatric risk factors for chronic high-dose opioid prescribing: register-based cohort study            Empirical longitud~ Yes          "Empirical signal:~
+2 Explanatory Model of Psychogenic, Behavioral and Environmental Causal Attributions of Cancer, and Their ~ Empirical validati~ Yes          "Empirical signal:~
+
+Both: Not Empirical:
+# A tibble: 2 x 5
+  title                              mt_groups                                  mt_labels                               is_empirical empirical_reasoning        
+  <chr>                              <chr>                                      <chr>                                   <chr>        <chr>                      
+1 A Lacanian perspective on identity Group 3: non-empirical                     expression_of_concern                   No           No clear empirical indicat~
+2 Beeman Phillips (1927–2023).       Group 2: grey zone; Group 3: non-empirical biography; historical_article; portaits No           No clear empirical signal ~
+
+Only Claude: Empirical:
+# A tibble: 2 x 5
+  title                                                                                                     mt_groups mt_labels is_empirical empirical_reasoning
+  <chr>                                                                                                     <chr>     <chr>     <chr>        <chr>              
+1 Edward Bradford Titchener: 2. The Oxford Years                                                            Group 2:~ biograph~ Yes          "Empirical signal:~
+2 Max Velmans Interview: On Understanding Consciousness, Reflexive Monism, and the Future of Consciousness~ Group 2:~ biograph~ Yes          "Empirical indicat~
+
+Only MultiTagger: Empirical:
+# A tibble: 2 x 5
+  title                                                                       mt_groups                           mt_labels     is_empirical empirical_reasoning
+  <chr>                                                                       <chr>                               <chr>         <chr>        <chr>              
+1 How prosocial actors use power hierarchies to build moral reputation        Empirical                           clinical_tri~ No           No clear empirical~
+2 Using AV1 robots to support pupils with physical and emotional health needs Group 1: strong empirical candidate interviews_a~ No           No clear empirical~
+
+MultiTagger: No opinion:
+# A tibble: 10 x 5
+   title                                                                                                    mt_groups mt_labels is_empirical empirical_reasoning
+   <chr>                                                                                                    <chr>     <chr>     <chr>        <chr>              
+ 1 Understanding patterns of psychological distress associated with acculturation and caregiving among div~ No opini~ (no labe~ No           No clear empirical~
+ 2 23 Musical Training May Not Enhance Cognitive-Motor Integration in Healthy Young Adults                  No opini~ (no labe~ Yes          Empirical signal: ~
+ 3 60 Impact of Reducing the Nuclear Mutant ATXN1 on Spinocerebellar Ataxia-Like Phenotype                  No opini~ (no labe~ Yes          Empirical signal: ~
+ 4 Dyadic approach to maturity to parenthood: multilevel study on attachment in expectant and non-expectan~ No opini~ (no labe~ No           No clear empirical~
+ 5 Human resources strategy improving perceived performance outcome infection control in hospital: importa~ No opini~ (no labe~ No           No clear empirical~
+ 6 Racism behind the screen: Examining the mediating and moderating relationships between anonymity, onlin~ No opini~ (no labe~ Yes          References 'this/t~
+ 7 Bi+ identity visibility and well-being in the context of romantic relationships.                         No opini~ (no labe~ Yes          Empirical indicato~
+ 8 Children's hypothetical reasoning about complex and dynamic systems                                      No opini~ (no labe~ Yes          empirical findings~
+ 9 Do teacher instructional practices shape children's academic self-concept and interest in mathematics a~ No opini~ (no labe~ Yes          statistical analys~
+10 BIDAR: Can Listeners Detect if a Man Is Bisexual from His Voice Alone?                                   No opini~ (no labe~ Yes          Empirical signal: ~
+
+==============================================================================
+7. SENSITIVITY: AGREEMENT UNDER EACH DECISION RULE
+==============================================================================
+
+
+-- 7a. Summary --------------------------------------------------------------- 
+# A tibble: 3 x 6
+  rule  mt_empirical_n claude_agrees_pct mt_non_empirical_n claude_agrees_pct_nonemp overall_agreement_pct
+  <chr>          <int>             <dbl>              <int>                    <dbl>                 <dbl>
+1 A              15592              89.5               1552                     69.3                  87.6
+2 B              14802              83.8               2342                     13.5                  74.2
+3 C              17011              84.7                133                     85.7                  84.7
+
+-- 7b. Full breakdown per rule (pct = % within MultiTagger's call) ----------- 
+
+Rule A - Empirical + Group 1 = empirical; Groups 2+3 = non-empirical:
+# A tibble: 4 x 3
+  agreement                       n   pct
+  <chr>                       <int> <dbl>
+1 Both: Not Empirical          1076  69.3
+2 Only Claude: Empirical        476  30.7
+3 Both: Empirical             13950  89.5
+4 Only MultiTagger: Empirical  1642  10.5
+
+Rule B - Empirical + Group 2 = empirical; Groups 1+3 = non-empirical:
+# A tibble: 4 x 3
+  agreement                       n   pct
+  <chr>                       <int> <dbl>
+1 Both: Not Empirical           315  13.5
+2 Only Claude: Empirical       2027  86.5
+3 Both: Empirical             12399  83.8
+4 Only MultiTagger: Empirical  2403  16.2
+
+Rule C - Empirical + Groups 1+2 = empirical; Group 3 = non-empirical (default):
+# A tibble: 4 x 3
+  agreement                       n   pct
+  <chr>                       <int> <dbl>
+1 Both: Not Empirical           114  85.7
+2 Only Claude: Empirical         19  14.3
+3 Both: Empirical             14407  84.7
+4 Only MultiTagger: Empirical  2604  15.3
+
+==============================================================================
+8. MULTITAGGER NO-OPINION ARTICLES
+==============================================================================
+
+No-opinion articles: 7767 of 24911 (31.2%)
+
+-- 8a. Claude's call --------------------------------------------------------- 
+# A tibble: 2 x 3
+  is_empirical     n   pct
+  <chr>        <int> <dbl>
+1 No            1965  25.3
+2 Yes           5802  74.7
+
+-- 8b. Claude ambiguity within each call ------------------------------------- 
+# A tibble: 3 x 4
+  is_empirical claude_ambiguous     n pct_within_call
+  <chr>        <lgl>            <int>           <dbl>
+1 No           FALSE              280            14.2
+2 No           TRUE              1685            85.8
+3 Yes          FALSE             5802           100  
+
+==============================================================================
+9. SAVED FILES
+==============================================================================
+
+mt_no_opinion_articles.csv
+articles_with_agreement.csv
