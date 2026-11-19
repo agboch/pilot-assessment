@@ -1,0 +1,19 @@
+# R session files
+.Rhistory
+.RData
+.Rproj.user/
+
+# TOP Factor reference data (downloaded by setup/download_top_factor.R)
+top_factor_data.csv
+top_factor_data.RData
+
+# PDF front-page text cache (rebuilt by run_coi_pdf_fallback.R)
+data/cache/pdf_front_text/
+
+# Secrets: API keys are read from the environment, never stored here
+.env
+.env.*
+*.env
+.Renviron
+
+.DS_Store
